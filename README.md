@@ -1,12 +1,14 @@
 # Scrap naver stock info : KOSPI, KOSDAQ, KOSPI200
 
 Scrap KOSPI, KOSDAQ, KOSPI200 for every 5 minute from [naver finance](https://finance.naver.com/sise/)
-![image](https://user-images.githubusercontent.com/20381868/76386639-4d414480-63a8-11ea-80d2-1c102b6dd1a2.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/20381868/76387967-567fe080-63ab-11ea-800e-660f788fc145.png" />
+</p>
 
-Save time, price, fluctuation price and rate.
+Save ```time, price, fluctuation price and rate```.
 
 ## How to use
- 1. Run ```./packages.sh``` 
+ 1. Run ```./venv.sh``` 
  2. Run ```python3 main.py```
  
 ## Environment

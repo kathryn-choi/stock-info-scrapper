@@ -18,7 +18,6 @@ def insert_db(table_name, scrap_time, price, _fluc_rate, _fluc_price):
               "value ('%s', '%s', '%s','%s') " % (table_name, scrap_time, price, _fluc_rate, _fluc_price)
 
         # execute sql
-        print(sql)
         cursor.execute(sql)
         conn.commit()
     except:
@@ -29,7 +28,7 @@ def insert_db(table_name, scrap_time, price, _fluc_rate, _fluc_price):
 if __name__ == '__main__':
     conn = pymysql.connect(host="127.0.0.1",
                             port=3306,
-                            user="root",
+                            user="",
                             password="",
                             db="stock",
                             charset="utf8")

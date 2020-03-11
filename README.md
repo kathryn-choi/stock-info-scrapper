@@ -1,4 +1,4 @@
-# Scrap naver stock info : KOSPI, KOSDAQ, KOSPI200
+# Scrap stock info from naver : KOSPI, KOSDAQ, KOSPI200
 
 Scrap KOSPI, KOSDAQ, KOSPI200 for every 5 minute from [naver finance](https://finance.naver.com/sise/)
 <p align="center">

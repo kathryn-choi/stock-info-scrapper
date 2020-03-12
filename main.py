@@ -12,7 +12,7 @@ def deter_incre(cur_rate):
     else:
         return "-"
 
-@app.route("/stock")
+@app.route("/api/v1/stock/index")
 def scrap_info():
     response = requests.get("https://finance.naver.com/sise/")
     html = response.text

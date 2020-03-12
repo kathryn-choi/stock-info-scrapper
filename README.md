@@ -6,7 +6,7 @@ Scrap KOSPI, KOSDAQ, KOSPI200 from [naver finance](https://finance.naver.com/sis
 </p>
 
 ## Result
-**curl -X GET 127.0.0.1:5000/stock**
+**curl -X GET 127.0.0.1:5000/api/v1/stock/index**
 ```angular2html
 {
     "time": "2020-03-12 14:57:41.802796",

@@ -1,8 +1,10 @@
 import requests
 import datetime
 from bs4 import BeautifulSoup
-from flask import Flask
+from flask import Flask, request
 import json
+from selenium import webdriver
+import re
 
 app = Flask(__name__)
 
@@ -14,7 +16,6 @@ def deter_incre(cur_rate):
 
 @app.route("/api/v1/stock/index")
 def scrap_info():
-
     response = requests.get("https://finance.naver.com/sise/")
     html = response.text
     soup = BeautifulSoup(html,"html.parser")
@@ -57,6 +58,45 @@ def scrap_info():
     result["ret_code"] = 0
     return json.dumps(result, indent=4)
 
-if __name__ == '__main__':
 
+@app.route("/api/v1/info")
+def code_based_scrap():
+    code = request.args.get('code')
+    url = "https://finance.daum.net/quotes/A"+code+"#analysis/main"
+    finance_table = "https://wisefn.finance.daum.net/v1/company/cF1001.aspx?cmp_cd="+code+"&amp;finGubun=MAIN"
+
+    stock_info = dict()
+
+    driver = webdriver.Chrome("/Users/Kathryn/downloads/chromedriver")
+    driver.get(url)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    name = soup.select("#favorite")[0].text
+    stock_info["name"] = re.findall("[가-힣]+", name)[0]
+    pbr = soup.select("#boxDashboard > div > div > span.txtB > dl > dd:nth-child(10) > p")[0].text
+    stock_info["pbr"] = pbr.split("(")[0].split("/")[1]
+    driver.close()
+
+    driver = webdriver.Chrome("/Users/Kathryn/downloads/chromedriver")
+    driver.get(finance_table)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    name_list = soup.select("#cTB26 > tbody > tr.row1 > th")
+    table_content = soup.select("#cTB26 > tbody > tr.row10 > td > span")
+    driver.close()
+
+    liability_info = dict()
+    for i in range(len(name_list)):
+        key = name_list[i].text.split("(")[0]
+        if i < 4:
+            liability_info[key + "y"] = table_content[i].text
+        else:
+            liability_info[key + "p"] = table_content[i].text
+
+    stock_info["liability"] = liability_info
+    result = dict()
+    result["msg"] = "OK"
+    result["data"] = stock_info
+    result["ret_code"] = 0
+    return json.dumps(result, indent=4,ensure_ascii=False)
+
+if __name__ == '__main__':
     app.run(debug=True)
